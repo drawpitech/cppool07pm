@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <queue>
+
 class Phaser {
    public:
     enum AmmoType { REGULAR, PLASMA, ROCKET };
@@ -18,11 +20,12 @@ class Phaser {
     void changeType(AmmoType newType);
     void reload();
     void addAmmo(AmmoType type);
-    int getCurrentAmmos() const { return _magazine; }
+    int getCurrentAmmos() const { return (int)_magazine.size(); }
 
    private:
+    void fillClip();
     static const int Empty = 0;
     const int _maxAmmo;
-    int _magazine = Empty;
+    std::queue<AmmoType> _magazine;
     AmmoType _type;
 };

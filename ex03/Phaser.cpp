@@ -12,23 +12,35 @@
 
 #include "Sounds.hpp"
 
-Phaser::Phaser(int maxAmmo, AmmoType type)
-    : _maxAmmo(maxAmmo), _magazine(maxAmmo), _type(type) {}
+Phaser::Phaser(int maxAmmo, AmmoType type) : _maxAmmo(maxAmmo), _type(type) {
+    fillClip();
+}
+
+void Phaser::fillClip() {
+    while ((int)_magazine.size() < _maxAmmo)
+        _magazine.push(_type);
+}
 
 void Phaser::fire() {
-    if (_magazine == Empty) {
+    if (_magazine.size() == Empty) {
         std::cout << "Clip empty, please reload\n";
         return;
     }
+    if (_type != _magazine.front())
+        return;
 
-    _magazine -= 1;
-    std::map<AmmoType, std::string> sounds{{REGULAR, Sounds::Regular},
-                                           {PLASMA, Sounds::Plasma},
-                                           {ROCKET, Sounds::Rocket}};
+    _magazine.pop();
+    std::map<AmmoType, std::string> sounds{
+        {REGULAR, Sounds::Regular},
+        {PLASMA, Sounds::Plasma},
+        {ROCKET, Sounds::Rocket}};
     std::cout << sounds.at(_type) << "\n";
 }
 
-void Phaser::ejectClip() { _magazine = Empty; }
+void Phaser::ejectClip() {
+    while (_magazine.size() > Empty)
+        _magazine.pop();
+}
 
 void Phaser::changeType(AmmoType newType) {
     static const std::map<AmmoType, std::string> names{
@@ -39,14 +51,15 @@ void Phaser::changeType(AmmoType newType) {
 }
 
 void Phaser::reload() {
-    _magazine = _maxAmmo;
+    ejectClip();
+    fillClip();
     std::cout << "Reloading...\n";
 }
 
 void Phaser::addAmmo(AmmoType type) {
-    if (_magazine == _maxAmmo) {
+    if ((int)_magazine.size() == _maxAmmo) {
         std::cout << "Clip full\n";
         return;
     }
-    if (_type == type) _magazine += 1;
+    _magazine.push(type);
 }
