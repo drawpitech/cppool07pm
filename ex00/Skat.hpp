@@ -13,7 +13,7 @@
 
 class Skat {
    public:
-    Skat(const std::string &name, int stimPaks)
+    Skat(const std::string &name = "bob", int stimPaks = 15)
         : _name(name), _stimPaks(stimPaks) {}
     ~Skat() = default;
 
