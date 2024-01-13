@@ -15,14 +15,19 @@ KreogCom::KreogCom(int x, int y, int serial) : _m_serial(serial), _x(x), _y(y) {
 
 KreogCom::~KreogCom() {
     std::cout << "KreogCom " << _m_serial << " shutting down\n";
-    delete _next;
+    if (_prev != nullptr)
+        _prev->_next = _next;
+    else
+        delete _next;
 }
 
 void KreogCom::addCom(int x, int y, int serial) {
-    if (_next != nullptr)
+    if (_next != nullptr) {
         _next->addCom(x, y, serial);
-    else
-        _next = new KreogCom(x, y, serial);
+        return;
+    }
+    _next = new KreogCom(x, y, serial);
+    _next->_prev = this;
 }
 
 void KreogCom::removeCom() {

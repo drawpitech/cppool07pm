@@ -23,4 +23,5 @@ class KreogCom {
     int _x;
     int _y;
     KreogCom *_next = nullptr;
+    KreogCom *_prev = nullptr;
 };
