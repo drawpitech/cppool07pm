@@ -26,7 +26,8 @@ void KreogCom::addCom(int x, int y, int serial) {
 }
 
 void KreogCom::removeCom() {
-    if (_next == nullptr) return;
+    if (_next == nullptr)
+        return;
     if (_next->_next != nullptr) {
         _next->removeCom();
         return;
@@ -35,14 +36,15 @@ void KreogCom::removeCom() {
     _next = nullptr;
 }
 
-KreogCom *KreogCom::getCom() { return _next; }
+KreogCom *KreogCom::getCom() const { return _next; }
 
-void KreogCom::ping() {
+void KreogCom::ping() const {
     std::cout << "KreogCom " << _m_serial << " currently at " << _x << " " << _y
               << "\n";
 }
 
-void KreogCom::locateSquad() {
-    if (_next != nullptr) _next->locateSquad();
+void KreogCom::locateSquad() const {
+    if (_next != nullptr)
+        _next->locateSquad();
     this->ping();
 }
