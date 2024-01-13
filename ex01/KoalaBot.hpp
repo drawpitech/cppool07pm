@@ -25,13 +25,13 @@ class KoalaBot {
     void swapParts(Legs &legs) { std::swap(_legs, legs); }
     void swapParts(Head &head) { std::swap(_head, head); }
 
-    void informations() {
+    void informations() const {
         std::cout << "[KoalaBot] " << _serial << "\n";
         _arms.informations();
         _legs.informations();
         _head.informations();
     }
-    bool status() {
+    bool status() const {
         return _arms.isFunctional() && _legs.isFunctional() &&
                _head.isFunctional();
     }

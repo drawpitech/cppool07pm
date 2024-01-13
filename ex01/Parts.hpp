@@ -18,7 +18,7 @@ class Part {
 
     bool isFunctional() const { return _functional; }
     std::string serial() const { return _serial; }
-    void informations() {
+    void informations() const {
         std::cout << "\t[Parts] " << _type << " " << _serial
                   << " status : " << (_functional ? "OK" : "KO") << "\n";
     }
